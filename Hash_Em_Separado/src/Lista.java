@@ -1,3 +1,4 @@
+import java.lang.reflect.InvocationTargetException;
 import java.util.NoSuchElementException;
 
 public class Lista<E> {
@@ -17,6 +18,27 @@ public class Lista<E> {
 	public boolean vazia() {
 		
 		return (this.primeiro == this.ultimo);
+	}
+	
+	public void inserirInicio(E novo) {
+	
+		Celula<E> novaCelula = new Celula<>(novo);
+		novaCelula.setProximo(this.primeiro.getProximo());
+		this.primeiro.setProximo(novaCelula);
+		
+		if (vazia())
+			this.ultimo = novaCelula;
+		
+		this.tamanho++;
+	}
+	
+	public void inserirFinal(E novo) {
+		
+		Celula<E> novaCelula = new Celula<>(novo);
+		this.ultimo.setProximo(novaCelula);
+		this.ultimo = novaCelula;
+		
+		this.tamanho++;
 	}
 	
 	public void inserir(E novo, int posicao) {
@@ -44,38 +66,49 @@ public class Lista<E> {
 		this.tamanho++;		
 	}
 	
-	public void inserirFinal(E novo) {
+	public E removerInicio() {
 		
-		Celula<E> novaCelula = new Celula<>(novo);
+		Celula<E> removida;
 		
-		this.ultimo.setProximo(novaCelula);
-		this.ultimo = novaCelula;
+		if (vazia())
+			throw new IllegalStateException("Não foi possível remover o item da lista: "
+					+ "a lista está vazia!");
 		
-		this.tamanho++;
+		removida = this.primeiro.getProximo();
+		this.primeiro.setProximo(removida.getProximo());
+		
+		if (removida == this.ultimo)
+			this.ultimo = this.primeiro;
+		
+		this.tamanho--;
+		
+		return removida.getItem();
 	}
 	
-	private E removerProxima(Celula<E> anterior) {
+	public E removerFinal() {
 		
-		Celula<E> celulaRemovida, proximaCelula;
+		Celula<E> anterior, removida;
 		
-		celulaRemovida = anterior.getProximo();
+		if (vazia())
+			throw new IllegalStateException("Não foi possível remover o item da lista: "
+					+ "a lista está vazia!");
 		
-		proximaCelula = celulaRemovida.getProximo();
-				
-		anterior.setProximo(proximaCelula);
-		celulaRemovida.setProximo(null);
-				
-		if (celulaRemovida == this.ultimo)
-			this.ultimo = anterior;
-				
+		anterior = this.primeiro;
+		while (anterior.getProximo() != this.ultimo)
+			anterior = anterior.getProximo();
+		
+		removida = this.ultimo;
+		anterior.setProximo(null);
+		this.ultimo = anterior;
+		
 		this.tamanho--;
-				
-		return (celulaRemovida.getItem());	
+		
+		return (removida.getItem());
 	}
 	
 	public E remover(int posicao) {
 		
-		Celula<E> anterior;
+		Celula<E> anterior, celulaRemovida, proximaCelula;
 		
 		if (vazia())
 			throw new IllegalStateException("Não foi possível remover o item da lista: "
@@ -89,52 +122,207 @@ public class Lista<E> {
 		for (int i = 0; i < posicao; i++)
 			anterior = anterior.getProximo();
 				
-		return (removerProxima(anterior));
+		celulaRemovida = anterior.getProximo();
+				
+		proximaCelula = celulaRemovida.getProximo();
+				
+		anterior.setProximo(proximaCelula);
+		celulaRemovida.setProximo(null);
+				
+		if (celulaRemovida == this.ultimo)
+			this.ultimo = anterior;
+				
+		this.tamanho--;
+				
+		return (celulaRemovida.getItem());	
 	}
 	
-	public E remover(E elemento) {
+	public E remover(E removido) {
 		
-		Celula<E> anterior;
+		Celula<E> aux, anterior;
 		
 		if (vazia())
 			throw new IllegalStateException("Não foi possível remover o item da lista: "
 					+ "a lista está vazia!");
 		
+		aux = this.primeiro.getProximo();
 		anterior = this.primeiro;
-		while ((anterior.getProximo() != null) && !(anterior.getProximo().getItem().equals(elemento)))
+		while (aux != null) {
+			if (aux.getItem().equals(removido)) {
+				anterior.setProximo(aux.getProximo());
+				if (aux == this.ultimo)
+					this.ultimo = anterior;
+				this.tamanho--;
+				return aux.getItem();
+			}
+			aux = aux.getProximo();
 			anterior = anterior.getProximo();
-		
-		if (anterior.getProximo() == null)
-			throw new NoSuchElementException("Item não encontrado!");
-		else {
-			return (removerProxima(anterior));
 		}
+		
+		throw new NoSuchElementException("Não foi possível remover o item da lista: "
+				+ "o item não foi encontrado na lista!");
 	}
 	
-	public E pesquisar(E procurado) {
+	public E localizar(E procurado) {
 		
 		Celula<E> aux;
 		
-		aux = this.primeiro.getProximo();
+		if (vazia())
+			throw new IllegalStateException("Não foi possível localizar o item na lista: "
+					+ "a lista está vazia!");
 		
+		aux = this.primeiro.getProximo();
 		while (aux != null) {
 			if (aux.getItem().equals(procurado))
 				return aux.getItem();
 			aux = aux.getProximo();
 		}
 		
-		throw new NoSuchElementException("Item não encontrado!");
+		throw new NoSuchElementException("O item não foi encontrado na lista!");
+	}
+	
+	public E localizar(int posicao) {
+		
+		Celula<E> aux;
+		
+		if (vazia())
+			throw new IllegalStateException("Não foi possível localizar o item na lista: "
+					+ "a lista está vazia!");
+		
+		if ((posicao < 0) || (posicao >= this.tamanho ))
+			throw new IndexOutOfBoundsException("Não foi possível localizar o item na lista: "
+					+ "a posição informada é inválida!");
+			
+		aux = this.primeiro.getProximo();
+		for (int i = 0; i < posicao; i++)
+			aux = aux.getProximo();
+	
+		return aux.getItem();
 	}
 	
 	public void imprimir() {
 		
 		Celula<E> aux;
 		
-		aux = this.primeiro.getProximo();
+		if (vazia())
+			System.out.println("A lista está vazia!");
+		else {
+			aux = this.primeiro.getProximo();
+			while (aux != null) {
+				System.out.println(aux.getItem());
+				aux = aux.getProximo();
+			}
+		}		
+	}
+	
+	public void concatenar(Lista<E> outraLista) {
+		
+		if (! outraLista.vazia()) {
+			this.ultimo.setProximo(outraLista.primeiro.getProximo());
+			this.ultimo = outraLista.ultimo;
+			this.tamanho += outraLista.tamanho;
+		}
+	}
+	
+	public Lista<E> copiar() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		
+		Lista<E> copia = new Lista<>();
+		Celula<E> aux = this.primeiro.getProximo();
+		E itemCopia;
 		
 		while (aux != null) {
-			System.out.println(aux.getItem());
+			//itemCopia = (E) aux.getItem().getClass().getMethod("clone").invoke(aux.getItem());
+			itemCopia = aux.getItem();
+			copia.inserirFinal(itemCopia);
 			aux = aux.getProximo();
 		}
+		
+		return(copia);
+	}
+	
+	// elimina os itens da lista encadeada que ocupam posição ímpar.
+    public void eliminarItensPosicoesImpares() {
+        
+    	Celula<E> par;
+
+        if (vazia())
+        	throw new IllegalStateException("A lista está vazia!");
+		
+        par = this.primeiro.getProximo();
+
+        while ((par != null) && (par.getProximo() != null)) {
+        	par.setProximo(par.getProximo().getProximo());
+        	this.tamanho--;
+            if (par.getProximo() == null)
+                    this.ultimo = par;
+                par = par.getProximo();
+        }
+    }
+
+    // elimina os itens da lista encadeada que ocupam posição par.
+    public void eliminarItensPosicoesPares() {
+    	
+    	Celula<E> impar;
+
+        if (vazia())
+        	throw new IllegalStateException("A lista está vazia!");
+		
+        impar = this.primeiro;
+
+        while ((impar != null) && (impar.getProximo() != null)) {
+        	impar.setProximo(impar.getProximo().getProximo());
+        	this.tamanho--;
+            if (impar.getProximo() == null)
+            	this.ultimo = impar;
+            impar = impar.getProximo();
+        }
+    }
+
+    
+    public E obterItemMeio() {
+ 		
+ 		int meio = this.tamanho/2;
+ 		Celula<E> aux = this.primeiro.getProximo();
+ 		
+ 		if (vazia())
+        	throw new IllegalStateException("A lista está vazia!");
+		
+ 		for (int numItens = 0; numItens != meio; numItens++)
+ 			aux = aux.getProximo();
+ 		
+ 		return aux.getItem();
+ 	}
+    
+    private Celula<E> localizarCelula(E item) {
+    	
+    	Celula<E> aux;
+    	
+    	if (vazia())
+        	throw new IllegalStateException("A lista está vazia!");
+    	
+    	aux = this.primeiro.getProximo();
+    	while (aux != null) {
+    		if (aux.getItem().equals(item))
+    			return aux;
+    		aux = aux.getProximo();
+    	}
+	
+    	throw new NoSuchElementException("O item não foi encontrado na lista!");
+    }
+    
+    // troca os itens, passados como parâmetros, de lugar na lista encadeada.
+    public void trocar(E itemX, E itemY) {
+    	
+    	E temp;
+    	Celula<E> celulaX = localizarCelula(itemX);
+    	Celula<E> celulaY = localizarCelula(itemY);
+    
+    	temp = celulaX.getItem();
+    	celulaX.setItem(celulaY.getItem());
+    	celulaY.setItem(temp);
+    }
+
+	public int tamanho(){
+		return tamanho;
 	}
 }

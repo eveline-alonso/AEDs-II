@@ -59,9 +59,9 @@ public class TabelaHash<K, V> {
 		/// ele é inserido no final da lista encadeada 
 		/// associada à posição, da tabela hash, em que esse novo item será localizado. 
 		try {
-			this.tabelaHash[posicao].pesquisar(entrada);
+			this.tabelaHash[posicao].localizar(entrada);
 			throw new IllegalArgumentException("O item já havia sido inserido anteriormente na tabela hash!");
-		} catch (NoSuchElementException excecao) {
+		} catch (NoSuchElementException | IllegalStateException iex) {
 			this.tabelaHash[posicao].inserirFinal(entrada);
 			return posicao;
 		}
@@ -83,7 +83,7 @@ public class TabelaHash<K, V> {
 		
 		/// pesquisa o item, cuja chave foi passada como parâmetro para esse método,
 		/// na lista encadeada associada à posição, da tabela hash, em que esse item deve estar armazenado.
-		procurado = this.tabelaHash[posicao].pesquisar(procurado);
+		procurado = this.tabelaHash[posicao].localizar(procurado);
 		return procurado.getValor();
 	}
 	
@@ -123,5 +123,13 @@ public class TabelaHash<K, V> {
 			else
 				this.tabelaHash[i].imprimir();
 		}
+	}
+
+	public int contador(){
+		int cont =0;
+		for (Lista<Entrada<K,V>> lista : tabelaHash) {
+			if(!lista.vazia()) cont+= lista.tamanho();
+		}
+		return cont;
 	}
 }

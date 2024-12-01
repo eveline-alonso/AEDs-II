@@ -1,5 +1,6 @@
 import java.util.Objects;
 
+@SuppressWarnings("unchecked")
 public class Entrada<K, V> {
 
 	private final K chave;
@@ -22,17 +23,18 @@ public class Entrada<K, V> {
 		this.valor = valor;
 	}
 	
+	
 	@Override
 	public boolean equals(Object outroObjeto) {
-		
+		boolean resposta;
 		Entrada<K, V> outraEntrada;
-		
-		if (this == outroObjeto) return true;
-		else if (outroObjeto == null || ! (outroObjeto.getClass() == this.getClass())) return false;
-		else {
+		try{
 			outraEntrada = (Entrada<K, V>) outroObjeto;
-			return (outraEntrada.getChave().equals(this.chave));
+			resposta = (outraEntrada.getChave().equals(this.chave));
+		}catch (ClassCastException ex){
+			resposta = false;
 		}
+		return resposta;
 	}
 	
 	@Override
@@ -42,6 +44,6 @@ public class Entrada<K, V> {
 	
 	@Override
 	public String toString() {
-		return (this.chave + "\n" + this.valor);
+		return (this.chave + ": " + this.valor);
 	}
 }
