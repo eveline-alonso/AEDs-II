@@ -16,11 +16,13 @@ public class Bubblesort<T extends Comparable<T>> implements IOrdenator<T> {
 		inicio = System.nanoTime();
 		this.dados = dados;
 	}
-		
+	
+	@Override
 	public void setComparador(Comparator<T> comparador) {
 		this.comparador = comparador;
 	}
 	
+	@Override
 	public T[] ordenar () {
 
 		comparacoes = 0;
@@ -49,10 +51,12 @@ public class Bubblesort<T extends Comparable<T>> implements IOrdenator<T> {
 	    dados[j] = temp;
 	}
 	
+	@Override
 	public long getComparacoes() {
 		return comparacoes;
 	}
 	
+	@Override
 	public long getMovimentacoes() {
 		return movimentacoes;
 	}
@@ -65,6 +69,7 @@ public class Bubblesort<T extends Comparable<T>> implements IOrdenator<T> {
 		termino = System.nanoTime();
 	}
 	
+	@Override
 	public double getTempoOrdenacao() {
 		
 		double tempoTotal;
