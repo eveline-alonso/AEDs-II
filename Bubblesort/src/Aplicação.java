@@ -29,10 +29,9 @@ public class Aplicação {
     	for (int i = 0; i < vetorTamanhos.length; i++) {
     		tamVetor = vetorTamanhos[i];
     		vetor = gerarVetor(tamVetor);
-    		ordenacao = new Bubblesort<>(vetor);
+    		ordenacao = new Bubblesort<>();
     		ordenacao.setComparador(Integer::compareTo);
-    		vetor = ordenacao.ordenar();
-    		
+    		vetor = ordenacao.ordenar(vetor);
     		System.out.printf("%,d;%,d;%,d;%.2f\n", tamVetor, ordenacao.getComparacoes(), ordenacao.getMovimentacoes(), ordenacao.getTempoOrdenacao());
     	}
     }

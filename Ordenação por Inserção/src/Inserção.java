@@ -2,19 +2,17 @@ import java.util.Comparator;
 
 public class Inserção<T extends Comparable<T>> implements IOrdenator<T> {
 
-	private T[] dados;
+	private T[] dadosOrdenados;
 	private Comparator<T> comparador;
 	private long comparacoes;
 	private long movimentacoes;
 	private long inicio;
 	private long termino;
 	
-	public Inserção(T[] dados) {
+	public Inserção() {
 		
 		comparacoes = 0;
 		movimentacoes = 0;
-		inicio = System.nanoTime();
-		this.dados = dados;
 	}
 	
 	@Override
@@ -23,30 +21,32 @@ public class Inserção<T extends Comparable<T>> implements IOrdenator<T> {
 	}
 	
 	@Override
-	public T[] ordenar() {
+	public T[] ordenar(T[] dados) {
 	
+		dadosOrdenados = dados;
+		
 		comparacoes = 0;
 		movimentacoes = 0;
 		iniciar();
 		
-		for (int i = 1; i < dados.length; i++) {
-			T item = dados[i];
+		for (int i = 1; i < dadosOrdenados.length; i++) {
+			T item = dadosOrdenados[i];
 			int j = i - 1;
 
-			while ((j >= 0) && (comparador.compare(dados[j], item) > 0)) {
+			while ((j >= 0) && (comparador.compare(dadosOrdenados[j], item) > 0)) {
 				comparacoes++;
 				
 				movimentacoes++;
-				dados[j + 1] = dados[j];
+				dadosOrdenados[j + 1] = dadosOrdenados[j];
 				j--;
 			}
 			movimentacoes++;
-			dados[j + 1] = item;
+			dadosOrdenados[j + 1] = item;
 		}
 		
 		terminar();
 		
-		return dados;
+		return dadosOrdenados;
 	}
 	
 	@Override

@@ -2,19 +2,17 @@ import java.util.Comparator;
 
 public class Seleção<T extends Comparable<T>> implements IOrdenator<T> {
 
-	private T[] dados;
+	private T[] dadosOrdenados;
 	private Comparator<T> comparador;
 	private long comparacoes;
 	private long movimentacoes;
 	private long inicio;
 	private long termino;
 	
-	public Seleção(T[] dados) {
+	public Seleção() {
 		
 		comparacoes = 0;
 		movimentacoes = 0;
-		inicio = System.nanoTime();
-		this.dados = dados;
 	}
 	
 	@Override
@@ -23,17 +21,19 @@ public class Seleção<T extends Comparable<T>> implements IOrdenator<T> {
 	}
 	
 	@Override
-	public T[] ordenar() {
+	public T[] ordenar(T[] dados) {
 	
+		dadosOrdenados = dados;
+		
 		comparacoes = 0;
 		movimentacoes = 0;
 		iniciar();
 		
-		for (int i = 0; i < (dados.length - 1); i++) {
+		for (int i = 0; i < (dadosOrdenados.length - 1); i++) {
 			 int menor = i;
-			 for (int j = (i + 1); j < dados.length; j++) {
+			 for (int j = (i + 1); j < dadosOrdenados.length; j++) {
 				 comparacoes++;
-	        	 if (comparador.compare(dados[menor], dados[j]) > 0)
+	        	 if (comparador.compare(dadosOrdenados[menor], dadosOrdenados[j]) > 0)
 	        		 menor = j;
 			 }
 	         if (menor != i)
@@ -42,16 +42,16 @@ public class Seleção<T extends Comparable<T>> implements IOrdenator<T> {
 		
 		terminar();
 		
-		return dados;
+		return dadosOrdenados;
 	}
 	
 	private void swap(int i, int j) {
 	      
 		movimentacoes++;
 		
-		T temp = dados[i];
-	    dados[i] = dados[j];
-	    dados[j] = temp;
+		T temp = dadosOrdenados[i];
+	    dadosOrdenados[i] = dadosOrdenados[j];
+	    dadosOrdenados[j] = temp;
 	}
 	
 	@Override
