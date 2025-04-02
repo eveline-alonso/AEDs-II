@@ -24,13 +24,12 @@ public class Aplicação {
     	
     	int tamVetor;
     	Integer[] vetor;
-    	Inserção<Integer> ordenacao;
+    	Inserção<Integer> ordenacao = new Inserção<>();
+		ordenacao.setComparador(Integer::compareTo);
     	
     	for (int i = 0; i < vetorTamanhos.length; i++) {
     		tamVetor = vetorTamanhos[i];
     		vetor = gerarVetor(tamVetor);
-    		ordenacao = new Inserção<>();
-    		ordenacao.setComparador(Integer::compareTo);
     		vetor = ordenacao.ordenar(vetor);
     		System.out.printf("%,d;%,d;%,d;%.2f\n", tamVetor, ordenacao.getComparacoes(), ordenacao.getMovimentacoes(), ordenacao.getTempoOrdenacao());
     	}

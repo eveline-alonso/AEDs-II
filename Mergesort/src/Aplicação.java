@@ -24,13 +24,12 @@ public class Aplicação {
     	
     	int tamVetor;
     	Integer[] vetor;
-    	Mergesort<Integer> ordenacao;
-    	
+    	Mergesort<Integer> ordenacao = new Mergesort<>();
+    	ordenacao.setComparador(Integer::compareTo);
+		
     	for (int i = 0; i < vetorTamanhos.length; i++) {
     		tamVetor = vetorTamanhos[i];
     		vetor = gerarVetor(tamVetor);
-    		ordenacao = new Mergesort<>();
-    		ordenacao.setComparador(Integer::compareTo);
     		vetor = ordenacao.ordenar(vetor);
     		System.out.printf("%,d;%,d;%,d;%.2f\n", tamVetor, ordenacao.getComparacoes(), ordenacao.getMovimentacoes(), ordenacao.getTempoOrdenacao());
     	}
@@ -39,7 +38,7 @@ public class Aplicação {
     public static void main(String[] args) {
         
     	System.out.println("Contagem de operações e medição "
-    			+ "do tempo de execução do método Mergesort");
+    			+ "do tempo de execução do método de ordenação Mergesort");
     	ordenar(TAMANHOS_TESTE_MEDIO);
     }
 }

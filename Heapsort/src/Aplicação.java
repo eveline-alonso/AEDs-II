@@ -24,7 +24,7 @@ public class Aplicação {
     	
     	int tamVetor;
     	Integer[] vetor;
-    	Bubblesort<Integer> ordenacao = new Bubblesort<>();
+    	Heapsort<Integer> ordenacao = new Heapsort<>();
 		ordenacao.setComparador(Integer::compareTo);
     	
     	for (int i = 0; i < vetorTamanhos.length; i++) {
@@ -38,7 +38,7 @@ public class Aplicação {
     public static void main(String[] args) {
         
     	System.out.println("Contagem de operações e medição "
-    			+ "do tempo de execução do método de ordenação Bubblesort");
+    			+ "do tempo de execução do método de ordenação Heapsort");
     	ordenar(TAMANHOS_TESTE_MEDIO);
     }
 }
