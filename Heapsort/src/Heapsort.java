@@ -30,6 +30,7 @@ public class Heapsort<T extends Comparable<T>> implements IOrdenator<T> {
 		
 		// Criando outro vetor, com todos os elementos do vetor anterior reposicionados (uma posição a frente)
 		// de forma a ignorar a posição zero	    
+		@SuppressWarnings("unchecked")
 		T[] tmp = (T[]) new Comparable[dadosOrdenados.length + 1];
 		for(int i = 0; i < dadosOrdenados.length; i++) {
 			tmp[i+1] = dadosOrdenados[i];
@@ -54,7 +55,6 @@ public class Heapsort<T extends Comparable<T>> implements IOrdenator<T> {
 		for(int i = 0; i < dadosOrdenados.length; i++) {
 			dadosOrdenados[i] = tmp[i+1];
 		}
-
 		
 		terminar();
 		
