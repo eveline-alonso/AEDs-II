@@ -76,4 +76,9 @@ public class Aluno implements Comparable<Aluno> {
 		Aluno outroAluno = (Aluno) outroObjeto;
 		return (this.nome.equals(outroAluno.getNome()));
 	}
+	
+	@Override
+	public int hashCode() {
+		return (this.numMatricula);
+	}
 }

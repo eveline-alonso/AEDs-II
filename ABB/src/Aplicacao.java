@@ -1,9 +1,14 @@
+import java.util.Comparator;
+
 public class Aplicacao {
 
 	public static void main(String[] args) {
 
-		ABB<Aluno> turma = new ABB<>();
-		Aluno alunoNovo, alunoRetirar, alunoProcurado;
+		ABB<String, Aluno> turma = new ABB<>();
+		Aluno alunoNovo;
+
+		// Comparator<String> compNomeReverso = ((a1, a2) -> a1.compareTo(a2)*-1);
+		// ABB<String, Aluno> turma = new ABB<>(compNomeReverso);  // para árvore em ordem alfabética reversa
 		
         if (turma.vazia())
             System.out.println("A turma está vazia."); /// Essa mensagem deve ser exibida.
@@ -12,75 +17,65 @@ public class Aplicacao {
 
         try {
         	alunoNovo = new Aluno (5, "Amanda", 85.00);
-        	turma.adicionar(alunoNovo);
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
 
         	alunoNovo = new Aluno(8, "Uriel", 87.00);
-        	turma.adicionar(alunoNovo);
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
 
         	alunoNovo = new Aluno(6, "Ivo", 75.00);
-        	turma.adicionar(alunoNovo);
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
 
         	alunoNovo = new Aluno(3, "Olivia", 90.00);
-        	turma.adicionar(alunoNovo);
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
 
         	alunoNovo = new Aluno(9, "Evandro", 85.00);
-        	turma.adicionar(alunoNovo);
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
 
         	alunoNovo = new Aluno(4, "Sônia", 82.00);
-        	turma.adicionar(alunoNovo);
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
 
         	alunoNovo = new Aluno(6, "Ivo", 75.00);
-        	turma.adicionar(alunoNovo); 
-        	
+        	turma.inserir(alunoNovo.getNome(), alunoNovo);
+
         } catch (Exception excecao) {
         	System.out.println(excecao.getMessage());
         	/// Deve ser exibida a mensagem: "O item já foi inserido anteriormente na árvore."
         }
 
-        turma.caminhamentoEmOrdem(); // Amanda - Evandro - Ivo - Olívia - Sônia - Uriel
+        System.out.println("=============\nCaminhamento Em Ordem");
+        System.out.println(turma.caminhamentoEmOrdem()); // Amanda - Evandro - Ivo - Olívia - Sônia - Uriel
         
-        alunoProcurado = new Aluno(0, "Amanda", 0.0);
-        System.out.println(turma.pesquisar(alunoProcurado));
+        System.out.println("=============\nPesquisando");
+        System.out.println(turma.pesquisar("Amanda"));
         
-        alunoProcurado = new Aluno(0, "Evandro", 0.0);
-        System.out.println(turma.pesquisar(alunoProcurado));
+        System.out.println("=============\nPesquisando");
+        System.out.println(turma.pesquisar("Evandro"));
         
         try {
-        	alunoRetirar = new Aluno(0, "Benício", 0.0);
-        	turma.remover(alunoRetirar); 
+        	turma.remover("Benício"); 
         } catch (Exception excecao) {
         	System.out.println(excecao.getMessage()); /// Deve ser exibida a mensagem: "O item a ser removido não foi localizado na árvore!"
-
         }
         
-        alunoRetirar = new Aluno(0, "Amanda", 0.0);
-        turma.remover(alunoRetirar);
+        turma.remover("Amanda");
+        turma.remover("Olivia");
         
-        alunoRetirar = new Aluno(0, "Olivia", 0.0);
-        turma.remover(alunoRetirar);
+        System.out.println("=============\nCaminhamento Em Ordem");
+        System.out.println(turma.caminhamentoEmOrdem()); // Evandro - Ivo - Sônia - Uriel
         
-        turma.caminhamentoEmOrdem(); // Evandro - Ivo - Sônia - Uriel
+        turma.remover("Sônia");
+        turma.remover("Uriel");
         
-        alunoRetirar = new Aluno(0, "Sônia", 0.0);
-        turma.remover(alunoRetirar);
+        System.out.println("=============\nCaminhamento Em Ordem");
+        System.out.println(turma.caminhamentoEmOrdem()); // Evandro - Ivo
         
-        alunoRetirar = new Aluno(0, "Uriel", 0.0);
-        turma.remover(alunoRetirar);
-        
-        turma.caminhamentoEmOrdem(); // Evandro - Ivo
-        
-        alunoRetirar = new Aluno(0, "Ivo", 0.0);
-        turma.remover(alunoRetirar);
-        
-        alunoRetirar = new Aluno(0, "Evandro", 0.0);
-        turma.remover(alunoRetirar);
+        turma.remover("Ivo");
+        turma.remover("Evandro");
         
         try {
-        	alunoRetirar = new Aluno(0, "Evandro", 0.0);
-        	turma.remover(alunoRetirar); 
+        	turma.remover("Evandro"); 
         } catch (Exception excecao) {
         	System.out.println(excecao.getMessage()); /// Deve ser exibida a mensagem: "O item a ser removido não foi localizado na árvore!"
-
         }
 	}
 }
