@@ -1,4 +1,4 @@
-public class AVL<E extends Comparable<E>> extends ABB<E> {
+public class AVL<K, V> extends ABB<K, V> {
 
 	/**
 	 *  Construtor da classe.
@@ -15,9 +15,9 @@ public class AVL<E extends Comparable<E>> extends ABB<E> {
     * @return a raiz atualizada da árvore ou sub-árvore balanceada AVL em que o item foi adicionado.
     */
     @Override
-    protected No<E> adicionar(No<E> raizArvore, E item) {
+    protected No<K, V> inserir(No<K, V> raizArvore, K chave, V item) {
     	
-    	return balancear(super.adicionar(raizArvore, item));
+    	return balancear(super.inserir(raizArvore, chave, item));
     }
     
     /**
@@ -33,7 +33,7 @@ public class AVL<E extends Comparable<E>> extends ABB<E> {
     * @return a raiz atualizada da árvore ou sub-árvore balanceada AVL após a remoção do antecessor do nó que foi retirado da árvore.
     */
     @Override
-    protected No<E> removerNoAntecessor(No<E> itemRetirar, No<E> raizArvore) {
+    protected No<K, V> removerNoAntecessor(No<K, V> itemRetirar, No<K, V> raizArvore) {
     	
         return balancear(super.removerNoAntecessor(itemRetirar, raizArvore));
     }
@@ -45,12 +45,12 @@ public class AVL<E extends Comparable<E>> extends ABB<E> {
     * @return a raiz atualizada da árvore ou sub-árvore balanceada AVL da qual o item foi retirado.
     */
     @Override
-    protected No<E> remover(No<E> raizArvore, E itemRemover) {
+    protected No<K, V> remover(No<K, V> raizArvore, K chaveRemover) {
     	
-    	return balancear(super.remover(raizArvore, itemRemover));
+    	return balancear(super.remover(raizArvore, chaveRemover));
     }
 
-    private No<E> balancear(No<E> raizArvore) {
+    private No<K, V> balancear(No<K, V> raizArvore) {
 		
 		int fatorBalanceamento;
 		int fatorBalanceamentoFilho;
@@ -83,10 +83,10 @@ public class AVL<E extends Comparable<E>> extends ABB<E> {
 		return raizArvore;
 	}
 	
-	private No<E> rotacionarDireita(No<E> p) {
+	private No<K, V> rotacionarDireita(No<K, V> p) {
 		
-		No<E> u;
-		No<E> filhoEsquerdaDireita;  // triângulo vermelho
+		No<K, V> u;
+		No<K, V> filhoEsquerdaDireita;  // triângulo vermelho
 		
 		u = p.getEsquerda();
 		filhoEsquerdaDireita = u.getDireita();
@@ -100,10 +100,10 @@ public class AVL<E extends Comparable<E>> extends ABB<E> {
 		return u;
 	}
 	
-	private No<E> rotacionarEsquerda(No<E> p) {
+	private No<K, V> rotacionarEsquerda(No<K, V> p) {
 	
-		No<E> z;
-		No<E> filhoDireitaEsquerda;  // triângulo vermelho
+		No<K, V> z;
+		No<K, V> filhoDireitaEsquerda;  // triângulo vermelho
 		
 		z = p.getDireita();
 		filhoDireitaEsquerda = z.getEsquerda();

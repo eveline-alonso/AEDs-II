@@ -1,56 +1,52 @@
-public class No<T extends Comparable<T>> {
+public class No<K, V> {
 
-	private T item;        // contém os dados do item armazenado no nodo da árvore.
-	private No<T> direita;    // referência ao nodo armazenado, na árvore, à direita do nó em questão.
-	private No<T> esquerda;   // referência ao nodo armazenado, na árvore, à esquerda do nó em questão.
+	private K chave;       // chave identificadora do item armazenado no nodo da árvore.
+	private V item;        // contém os dados do item armazenado no nodo da árvore.
+	private No<K, V> direita;    // referência ao nodo armazenado, na árvore, à direita do nó em questão.
+	private No<K, V> esquerda;   // referência ao nodo armazenado, na árvore, à esquerda do nó em questão.
 	private int altura;
 	
-	public No() {
-		this.setItem(null);
-	    this.setDireita(null);
-	    this.setEsquerda(null);
-	    this.altura = 0;
-	}
-	
-	public No(T item) {
-		this.setItem(item);
-	    this.setDireita(null);
-	    this.setEsquerda(null);
-	    this.altura = 0;
+	public No(K chave, V item) {
+		setChave(chave);
+		setItem(item);
+	    setDireita(null);
+	    setEsquerda(null);
+	    altura = 0;
 	}
 
-	public No(T item, No<T> esquerda, No<T> direita) {
-		this.setItem(item);
-	    this.setDireita(direita);
-	    this.setEsquerda(esquerda);
-	    this.altura = 0;
+	public V getItem() {
+		return item;
 	}
 
-	public T getItem() {
-		return this.item;
-	}
-
-	public void setItem(T item) {
+	public void setItem(V item) {
 		this.item = item;
 	}
 
-	public No<T> getDireita() {
-		return this.direita;
+	public K getChave() {
+		return chave;
 	}
 
-	public void setDireita(No<T> direita) {
+	public void setChave(K chave) {
+		this.chave = chave;
+	}
+	
+	public No<K, V> getDireita() {
+		return direita;
+	}
+
+	public void setDireita(No<K, V> direita) {
 		this.direita = direita;
 	}
 
-	public No<T> getEsquerda() {
-		return this.esquerda;
+	public No<K, V> getEsquerda() {
+		return esquerda;
 	}
 
-	public void setEsquerda(No<T> esquerda) {
+	public void setEsquerda(No<K, V> esquerda) {
 		this.esquerda = esquerda;
 	}
 	
-	private int getAltura(No<T> no) {
+	private int getAltura(No<K, V> no) {
 		
 		if (no != null)
 			return no.getAltura();
@@ -66,22 +62,22 @@ public class No<T extends Comparable<T>> {
 		
 		int alturaEsquerda, alturaDireita;
 		
-		alturaEsquerda = getAltura(this.esquerda);
-		alturaDireita = getAltura(this.direita);
+		alturaEsquerda = getAltura(esquerda);
+		alturaDireita = getAltura(direita);
 		
 		if (alturaEsquerda > alturaDireita)
-			this.altura = alturaEsquerda + 1;
+			altura = alturaEsquerda + 1;
 		else
-			this.altura = alturaDireita + 1;
+			altura = alturaDireita + 1;
 	}
 	
 	public int getFatorBalanceamento() {
 		
 		int alturaEsquerda, alturaDireita;
 		
-		alturaEsquerda = getAltura(this.esquerda);
-		alturaDireita = getAltura(this.direita);
+		alturaEsquerda = getAltura(esquerda);
+		alturaDireita = getAltura(direita);
 		
 		return (alturaEsquerda - alturaDireita);
-	}
+	}	
 }
