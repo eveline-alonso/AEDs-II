@@ -65,10 +65,7 @@ public class No<K, V> {
 		alturaEsquerda = getAltura(esquerda);
 		alturaDireita = getAltura(direita);
 		
-		if (alturaEsquerda > alturaDireita)
-			altura = alturaEsquerda + 1;
-		else
-			altura = alturaDireita + 1;
+		altura = Math.max(alturaEsquerda, alturaDireita) + 1;
 	}
 	
 	public int getFatorBalanceamento() {
