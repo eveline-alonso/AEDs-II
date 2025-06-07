@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class AVL<K, V> extends ABB<K, V> {
 
 	/**
@@ -6,6 +8,10 @@ public class AVL<K, V> extends ABB<K, V> {
 	 */
     public AVL() {
         super();
+    }
+    
+    public AVL(Comparator<K> comparador) {
+    	super(comparador);
     }
     
     /**
