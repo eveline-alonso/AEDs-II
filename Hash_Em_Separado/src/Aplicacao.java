@@ -32,7 +32,7 @@ public class Aplicacao {
 		}
 		
         System.out.println("Alunos matriculados na turma:");
-        turma.imprimir(); // Uriel - Sônia - Olívia - Amanda - Ivo - Evandro  
+        System.out.println(turma.toString()); // Uriel - Sônia - Olívia - Amanda - Ivo - Evandro  
         
         System.out.println("Pesquisando por Amanda:");
         System.out.println(turma.pesquisar("Amanda"));
@@ -53,6 +53,6 @@ public class Aplicacao {
         turma.remover("Olivia");
         
         System.out.println("Alunos matriculados na turma:");
-        turma.imprimir(); // Uriel - Sônia - Ivo - Evandro  
+        System.out.println(turma.toString()); // Uriel - Sônia - Ivo - Evandro  
 	}
 }

@@ -126,15 +126,26 @@ public class Lista<E> {
 		throw new NoSuchElementException("Item não encontrado!");
 	}
 	
-	public void imprimir() {
+	@Override
+	public String toString() {
 		
 		Celula<E> aux;
+		String listaString = "A lista está vazia!\n";
 		
-		aux = this.primeiro.getProximo();
+		if (!vazia()) {
+			listaString = "";
 		
-		while (aux != null) {
-			System.out.println(aux.getItem());
-			aux = aux.getProximo();
+			aux = this.primeiro.getProximo();
+		
+			while (aux != null) {
+				listaString += aux.getItem() + "\n";
+				aux = aux.getProximo();
+			}
 		}
+		return listaString;
+	}
+	
+	public int tamanho() {
+		return tamanho;
 	}
 }

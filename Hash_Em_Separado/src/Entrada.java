@@ -22,6 +22,7 @@ public class Entrada<K, V> {
 		this.valor = valor;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object outroObjeto) {
 		
@@ -42,6 +43,6 @@ public class Entrada<K, V> {
 	
 	@Override
 	public String toString() {
-		return (this.chave + "\n" + this.valor);
+		return (this.chave + "-->" + this.valor);
 	}
 }
