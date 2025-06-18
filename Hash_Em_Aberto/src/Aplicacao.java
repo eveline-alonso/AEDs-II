@@ -32,7 +32,9 @@ public class Aplicacao {
 		}
 		
         System.out.println("Alunos matriculados na turma:");
-        turma.imprimir(); // Amanda - Uriel - Ivo - Sônia - Evandro - Olivia  
+        System.out.println(turma.toString()); // Amanda - Uriel - Ivo - Sônia - Evandro - Olivia  
+        
+        System.out.println("Número de alunos matriculados na turma: " + turma.tamanho());  // 6
         
         System.out.println("Pesquisando por Amanda:");
         System.out.println(turma.pesquisar("Amanda"));
@@ -53,6 +55,8 @@ public class Aplicacao {
         turma.remover("Olivia");
         
         System.out.println("Alunos matriculados na turma:");
-        turma.imprimir(); // Uriel - Ivo - Sônia - Evandro
+        System.out.println(turma.toString()); // Uriel - Ivo - Sônia - Evandro
+        
+        System.out.println("Número de alunos matriculados na turma: " + turma.tamanho());  // 4
 	}
 }

@@ -1,6 +1,6 @@
 import java.util.NoSuchElementException;
 
-public class TabelaHash<K, V> {
+public class TabelaHash<K, V> implements IMapeamento<K, V>{
 
 	private Entrada<K, V>[] tabelaHash; 
 	
@@ -19,10 +19,10 @@ public class TabelaHash<K, V> {
 	public TabelaHash(int capacidade) {
 		
 		this.capacidade = capacidade;
-		this.tabelaHash = (Entrada<K, V>[]) new Entrada[this.capacidade]; 
+		tabelaHash = (Entrada<K, V>[]) new Entrada[this.capacidade]; 
 		
 		for (int i = 0; i < this.capacidade; i++)
-			this.tabelaHash[i] = null;
+			tabelaHash[i] = null;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class TabelaHash<K, V> {
 	 * @return a posição que o item, cuja chave corresponde a que foi passada como parâmetro para esse método, deve ocupar na tabela hash.
 	 */
 	private int funcaoHash(K chave, int tentativas) {
-		return (Math.abs(chave.hashCode() + tentativas)) % this.capacidade;
+		return (Math.abs(chave.hashCode() + tentativas)) % capacidade;
 	}
 	
 	/**
@@ -46,19 +46,20 @@ public class TabelaHash<K, V> {
 	 * @param item: referência ao item que deve ser inserido na tabela hash.
 	 * @return a posição na tabela hash em que o novo item foi inserido.
 	 */
+	@Override
 	public int inserir(K chave, V item) {
 		
 		int tentativas = 0;
 		int posicao = funcaoHash(chave, tentativas);
 		boolean inseriu = false;
 		
-		while ((tentativas < this.capacidade) && !inseriu) {
-			if ((this.tabelaHash[posicao] == null) || (this.tabelaHash[posicao].isRemovida())) {
-				this.tabelaHash[posicao] = new Entrada<>(chave, item);
+		while ((tentativas < capacidade) && !inseriu) {
+			if ((tabelaHash[posicao] == null) || (tabelaHash[posicao].isRemovida())) {
+				tabelaHash[posicao] = new Entrada<>(chave, item);
 				inseriu = true;
-			} else if (this.tabelaHash[posicao].getChave().equals(chave))
+			} else if ((tabelaHash[posicao].getChave().equals(chave)) && !(tabelaHash[posicao].isRemovida())) {
 				throw new IllegalArgumentException("O item já havia sido inserido anteriormente na tabela hash!");
-			else {
+			} else {
 				tentativas++;
 			
 				/// cálculo da posição da tabela hash em que o novo item deverá ser armazenado.
@@ -66,10 +67,11 @@ public class TabelaHash<K, V> {
 			}
 		}
 		
-		if (inseriu)
+		if (inseriu) {
 			return posicao;
-		else
+		} else {
 			throw new IllegalStateException("A tabela hash está cheia: não foi possível inserir o novo elemento.");
+		}
 	}
 	
 	/**
@@ -79,17 +81,18 @@ public class TabelaHash<K, V> {
 	 * @return uma referência ao item encontrado.
 	 * O método lança uma exceção caso o item não tenha sido localizado na tabela hash.
 	 */
+	@Override
 	public V pesquisar(K chave) {
 		
 		int tentativas = 0;
 		int posicao = funcaoHash(chave, tentativas);
 		
-		while (tentativas < this.capacidade) {
-			if (this.tabelaHash[posicao] == null)
+		while (tentativas < capacidade) {
+			if (tabelaHash[posicao] == null) {
 				throw new NoSuchElementException("Item não encontrado!");
-			else if ((this.tabelaHash[posicao].getChave().equals(chave)) && !(this.tabelaHash[posicao].isRemovida()))
-					return this.tabelaHash[posicao].getValor();
-			else {
+			} else if ((tabelaHash[posicao].getChave().equals(chave)) && !(tabelaHash[posicao].isRemovida())) {
+					return tabelaHash[posicao].getValor();
+			} else {
 				tentativas++;
 				
 				/// cálculo da posição da tabela hash em que o item deve estar armazenado.
@@ -107,18 +110,19 @@ public class TabelaHash<K, V> {
 	 * @return uma referência ao item removido.
 	 * O método lança uma exceção caso o item não seja localizado na tabela hash.
 	 */
+	@Override
 	public V remover(K chave) {
 		
 		int tentativas = 0;
 		int posicao = funcaoHash(chave, tentativas);
 		
-		while (tentativas < this.capacidade) {
+		while (tentativas < capacidade) {
 			
-			if (this.tabelaHash[posicao] == null)
+			if (tabelaHash[posicao] == null) {
 				throw new NoSuchElementException("Item não encontrado!");
-			else if ((this.tabelaHash[posicao].getChave().equals(chave)) && !(this.tabelaHash[posicao].isRemovida())) {
-					this.tabelaHash[posicao].setRemovida(true);
-					return this.tabelaHash[posicao].getValor();
+			} else if ((tabelaHash[posicao].getChave().equals(chave)) && !(tabelaHash[posicao].isRemovida())) {
+					tabelaHash[posicao].setRemovida(true);
+					return tabelaHash[posicao].getValor();
 			} else {
 				tentativas++;
 				
@@ -130,20 +134,43 @@ public class TabelaHash<K, V> {
 		throw new NoSuchElementException("Item não encontrado!");
 	}
 	
+	//#region Herança Object
+	@Override
+	public String toString(){
+		return percorrer();
+	}
+	//#endregion
+		
 	/**
-	 * Método responsável por imprimir todo o conteúdo da tabela hash.
-	 * É impresso o índice da tabela hash e seu correspondente conteúdo.
-	 * Se a posição da tabela hash estiver vazia, é impressa uma mensagem explicativa.
-	 * Caso contrário, para cada posição da tabela hash, são impressos seus dados.
+	 * Método responsável por percorrer todo o conteúdo da tabela hash e retornar sua representação, em string.
+	 * A string inclui o índice da tabela hash e seu correspondente conteúdo.
+	 * Se a posição da tabela hash estiver vazia, é incluída uma mensagem explicativa.
+	 * Caso contrário, para cada posição da tabela hash, são incluídos seus dados, sempre usando
+	 * o polimorfismo do toString.
 	 */
-	public void imprimir(){
+	 @Override
+	public String percorrer(){
 	
-		for (int i = 0; i < this.capacidade; i++) {
-			System.out.println("Posição[" + i + "]: ");
-			if ((this.tabelaHash[i] == null) || (this.tabelaHash[i].isRemovida()))
-				System.out.println("vazia");
-			else 
-				System.out.println(this.tabelaHash[i]);
+		String conteudo = "";
+		for (int i = 0; i < capacidade; i++) {
+			conteudo += ("Posição[" + i + "]: ");
+			if ((tabelaHash[i] == null) || (tabelaHash[i].isRemovida())) {
+				conteudo += "vazia\n";
+			} else {
+				conteudo += tabelaHash[i] + "\n";
+			}
 		}
+		return conteudo;
+	}
+
+	@Override
+	public int tamanho() {
+		int tamanho = 0;
+		for (int i = 0; i < capacidade; i++) {
+			if ((tabelaHash[i] != null) && !(tabelaHash[i].isRemovida())) {
+				tamanho++;
+			}
+		}
+		return tamanho;
 	}
 }

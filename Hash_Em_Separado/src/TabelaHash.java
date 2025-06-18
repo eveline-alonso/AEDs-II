@@ -90,7 +90,7 @@ public class TabelaHash<K, V> implements IMapeamento<K, V>{
 		
 		/// pesquisa o item, cuja chave foi passada como parâmetro para esse método,
 		/// na lista encadeada associada à posição, da tabela hash, em que esse item deve estar armazenado.
-		procurado = this.tabelaHash[posicao].pesquisar(procurado);
+		procurado = tabelaHash[posicao].pesquisar(procurado);
 		return procurado.getValor();
 	}
 	
@@ -111,7 +111,7 @@ public class TabelaHash<K, V> implements IMapeamento<K, V>{
 		
 		/// remove o item, cuja chave foi passada como parâmetro para esse método,
 		/// da lista encadeada associada à posição, da tabela hash, em que esse item deve estar armazenado.	
-		procurado = this.tabelaHash[posicao].remover(procurado);
+		procurado = tabelaHash[posicao].remover(procurado);
 		return procurado.getValor();
 	}
 	
@@ -135,10 +135,10 @@ public class TabelaHash<K, V> implements IMapeamento<K, V>{
 		String conteudo = "Tabela com " + capacidade + " posições e " + tamanho() + " itens\n";
 		for (int i = 0; i < capacidade; i++) {
 			conteudo += "Posição[" + i + "]: ";
-			if (this.tabelaHash[i].vazia())
+			if (tabelaHash[i].vazia())
 				conteudo += "vazia\n";
 			else
-				conteudo += this.tabelaHash[i].toString() + "\n";
+				conteudo += tabelaHash[i].toString() + "\n";
 		}
 		return conteudo;
 	}

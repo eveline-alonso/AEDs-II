@@ -22,27 +22,26 @@ public class Entrada<K, V> {
 		this.valor = valor;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object outroObjeto) {
 		
-		Entrada<K, V> outraEntrada;
+		Entrada<?, ?> outraEntrada;
 		
 		if (this == outroObjeto) return true;
 		else if (outroObjeto == null || ! (outroObjeto.getClass() == this.getClass())) return false;
 		else {
-			outraEntrada = (Entrada<K, V>) outroObjeto;
+			outraEntrada = (Entrada<?, ?>) outroObjeto;
 			return (outraEntrada.getChave().equals(this.chave));
 		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.chave);
+		return Objects.hash(chave);
 	}
 	
 	@Override
 	public String toString() {
-		return (this.chave + "-->" + this.valor);
+		return (chave + "-->" + valor);
 	}
 }
