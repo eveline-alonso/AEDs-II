@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Bubblesort<T extends Comparable<T>> implements IOrdenator<T> {
+public class Bubblesort<T> implements IOrdenator<T> {
 
 	private T[] dadosOrdenados;
 	private Comparator<T> comparador;

@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Heapsort<T extends Comparable<T>> implements IOrdenator<T> {
+public class Heapsort<T> implements IOrdenator<T> {
 
 	private T[] dadosOrdenados;
 	private Comparator<T> comparador;

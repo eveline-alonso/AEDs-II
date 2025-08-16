@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Seleção<T extends Comparable<T>> implements IOrdenator<T> {
+public class Seleção<T> implements IOrdenator<T> {
 
 	private T[] dadosOrdenados;
 	private Comparator<T> comparador;
