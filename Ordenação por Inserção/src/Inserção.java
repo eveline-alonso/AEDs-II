@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Inserção<T> implements IOrdenator<T> {
+public class Inserção<T extends Comparable<T>> implements IOrdenator<T> {
 
 	private T[] dadosOrdenados;
 	private Comparator<T> comparador;
@@ -13,8 +13,16 @@ public class Inserção<T> implements IOrdenator<T> {
 		
 		comparacoes = 0;
 		movimentacoes = 0;
+		setComparador(T::compareTo);
 	}
 	
+	public Inserção(Comparator<T> comparador) {
+		
+		comparacoes = 0;
+		movimentacoes = 0;
+		setComparador(comparador);
+	}
+
 	@Override
 	public void setComparador(Comparator<T> comparador) {
 		this.comparador = comparador;
