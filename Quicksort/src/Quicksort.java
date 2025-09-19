@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Quicksort<T> implements IOrdenator<T> {
+public class Quicksort<T extends Comparable<T>> implements IOrdenator<T> {
 
 	private T[] dadosOrdenados;
 	private Comparator<T> comparador;
@@ -13,6 +13,14 @@ public class Quicksort<T> implements IOrdenator<T> {
 		
 		comparacoes = 0;
 		movimentacoes = 0;
+		setComparador(T::compareTo);
+	}
+
+	public Quicksort(Comparator<T> comparador) {
+		
+		comparacoes = 0;
+		movimentacoes = 0;
+		setComparador(comparador);
 	}
 	
 	@Override

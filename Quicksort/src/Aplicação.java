@@ -25,8 +25,7 @@ public class Aplicação {
     	int tamVetor;
     	Integer[] vetor;
     	Quicksort<Integer> ordenacao = new Quicksort<>();
-		ordenacao.setComparador(Integer::compareTo);
-    	
+		
     	for (int i = 0; i < vetorTamanhos.length; i++) {
     		tamVetor = vetorTamanhos[i];
     		vetor = gerarVetor(tamVetor);
