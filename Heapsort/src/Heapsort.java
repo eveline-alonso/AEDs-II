@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Heapsort<T> implements IOrdenator<T> {
+public class Heapsort<T extends Comparable<T>> implements IOrdenator<T> {
 
 	private T[] dadosOrdenados;
 	private Comparator<T> comparador;
@@ -13,8 +13,16 @@ public class Heapsort<T> implements IOrdenator<T> {
 		
 		comparacoes = 0;
 		movimentacoes = 0;
+		setComparador(T::compareTo);
 	}
 	
+	public Heapsort(Comparator<T> comparador) {
+		
+		comparacoes = 0;
+		movimentacoes = 0;
+		setComparador(comparador);
+	}
+
 	@Override
 	public void setComparador(Comparator<T> comparador) {
 		this.comparador = comparador;
