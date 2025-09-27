@@ -22,6 +22,7 @@ public class Seleção<T extends Comparable<T>> implements IOrdenator<T> {
 		movimentacoes = 0;
 		setComparador(comparador);
 	}
+	
 
 	@Override
 	public void setComparador(Comparator<T> comparador) {
