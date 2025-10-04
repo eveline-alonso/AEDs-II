@@ -53,18 +53,17 @@ public class Fila<E> {
 
 	}
 	
-	public void imprimir() {
+	@Override
+	public String toString() {
 		
 		Celula<E> aux;
+		String filaTexto = new String();
 		
-		if (vazia())
-			System.out.println("A fila está vazia!");
-		else {
-			aux = this.frente.getProximo();
-			while (aux != null) {
-				System.out.println(aux.getItem());
-				aux = aux.getProximo();
-			}
-		} 	
+		aux = this.frente.getProximo();
+		while (aux != null) {
+			filaTexto += aux.getItem() + "\n";
+			aux = aux.getProximo();
+		}
+		return filaTexto; 	
 	}
 }

@@ -15,7 +15,7 @@ public class Celula<T> {
 
 	public Celula(T item, Celula<T> proximo) {
         this.item = item;
-        this.proximo = proximo;
+        setProximo(proximo);
     }
 	
 	public T getItem() {

@@ -10,8 +10,8 @@ public class Cliente {
 	
 	Cliente(String nome, LocalDateTime horarioChegada) {
 		this.codigo = contador++;
-		this.nome = nome;
-		this.horarioChegada = horarioChegada;
+		setNome(nome);
+		setHorarioChegada(horarioChegada);
 	}
 	
 	public int getCodigo() {
@@ -34,6 +34,7 @@ public class Cliente {
 		this.horarioChegada = horarioChegada;
 	}
 	
+	@Override
 	public String toString() {
 		return ("Código: " + this.codigo + " Nome: " + this.nome + 
 				" Horário de chegada: " + this.horarioChegada);

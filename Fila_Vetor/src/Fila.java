@@ -55,16 +55,16 @@ public class Fila<E> {
 
 	}
 	
-	public void imprimir() {
+	@Override
+	public String toString() {
 		
 		int posicao;
+		String filaTexto = new String();
 		
-		if (vazia())
-			System.out.println("A fila está vazia!");
-		else 
-			for (int i = this.frente; i < this.tras; i++) {
-				posicao = obterIndice(i);
-				System.out.println(fila[posicao]);
-			}
+		for (int i = this.frente; i < this.tras; i++) {
+			posicao = obterIndice(i);
+			filaTexto += fila[posicao] + "\n";
+		}
+		return filaTexto;
 	}
 }

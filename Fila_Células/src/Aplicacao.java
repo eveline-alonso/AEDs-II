@@ -21,6 +21,6 @@ public class Aplicacao {
         System.out.println("O cliente " + cli.getNome() + " foi atendido."); // John
         
         System.out.println("Itens na fila:");
-        filaLanchonete.imprimir();  // Charles - Mary
+        System.out.println(filaLanchonete.toString());  // Charles - Mary
 	}
 }
