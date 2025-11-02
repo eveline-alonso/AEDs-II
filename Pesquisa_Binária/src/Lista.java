@@ -68,11 +68,6 @@ public class Lista<E extends Comparable<E>> {
 		lista = metodoOrdenacao.ordenar(lista);
 	}
 	
-	public void imprimir() {
-		for (int i = this.primeiro; i < this.ultimo; i++)
-			System.out.println(lista[i]);
-	}
-	
 	@Override
 	public String toString() {
 	
