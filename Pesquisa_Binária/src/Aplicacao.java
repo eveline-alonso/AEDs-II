@@ -27,7 +27,7 @@ public class Aplicacao {
 	    lista.inserir(cc, 1);
 	    
 	    lista.ordenar();
-	   
+	    
 	    try {
 	    	cc = new ContaCorrente("John", 0, 0);
 	    	System.out.println("Pesquisando a conta-corrente de John");

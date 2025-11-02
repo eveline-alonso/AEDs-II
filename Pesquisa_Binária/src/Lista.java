@@ -2,7 +2,7 @@ import java.util.NoSuchElementException;
 
 public class Lista<E extends Comparable<E>> {
 
-	private final E[] lista;
+	private E[] lista;
 	private final int primeiro;
 	private int ultimo;
 	
@@ -64,49 +64,30 @@ public class Lista<E extends Comparable<E>> {
 	}
 	
 	public void ordenar() {
-		quicksort(0, this.ultimo - 1);
-	}
-	
-	/**
-	* Algoritmo de ordenação Quicksort.
-	* @param int esq: início da partição a ser ordenada
-	* @param int dir: fim da partição a ser ordenada
-	*/
-	private void quicksort(int esq, int dir) {
-				
-		int part;
-		if (esq < dir){
-			part = particao(esq, dir);
-			quicksort(esq, part - 1);
-			quicksort(part + 1, dir);
-		}
-	}
-					
-	private int particao(int inicio, int fim) {
-			
-		E pivot = lista[fim];
-		int part = inicio - 1;
-		for (int i = inicio; i < fim; i++) {
-			if (lista[i].compareTo(pivot) < 0) {
-				part++;
-				swap(part, i);
-			}
-		}
-		part++;
-		swap(part, fim);
-		return (part);
-	}
-		
-	private void swap(int i, int j) {
-		      
-		E temp = lista[i];
-		lista[i] = lista[j];
-		lista[j] = temp;
+		Quicksort<E> metodoOrdenacao = new Quicksort<>();
+		lista = metodoOrdenacao.ordenar(lista);
 	}
 	
 	public void imprimir() {
 		for (int i = this.primeiro; i < this.ultimo; i++)
 			System.out.println(lista[i]);
+	}
+	
+	@Override
+	public String toString() {
+	
+		String listaTexto;
+		
+		if (vazia()) {
+			listaTexto = "A lista está vazia."; 
+		} else {
+			listaTexto = "";
+		
+			for (int i = this.primeiro; i < this.ultimo; i++) {
+				listaTexto += lista[i] + "\n";
+			}
+		}
+		return listaTexto;
 	}
 	
 	public E pesquisar(E procurado) {
