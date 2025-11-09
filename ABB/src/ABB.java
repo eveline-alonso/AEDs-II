@@ -11,34 +11,27 @@ public class ABB<K, V> implements IMapeamento<K, V> {
 	 * Método auxiliar para inicialização da árvore binária de busca.
 	 * 
 	 * Este método define a raiz da árvore como {@code null} e seu tamanho como 0.
-	 * Se o comparador fornecido for {@code null}, o comparador padrão de ordem natural
-	 * será utilizado.
-	 * 
+	 * Utiliza o comparador fornecido para definir a organização dos elementos na árvore.
 	 * @param comparador o comparador para organizar os elementos da árvore.
 	 */
-	@SuppressWarnings("unchecked")
 	private void init(Comparator<K> comparador) {
 		raiz = null;
 		tamanho = 0;
-		if (comparador == null) {
-			comparador = (Comparator<K>) Comparator.naturalOrder();
-		}
 		this.comparador = comparador;
 	}
 	
 	/**
      * Construtor da classe.
-     * Esse construtor cria uma nova árvore binária de busca vazia. Para isso, esse método atribui null à raiz da árvore.
-     */
-    public ABB() {
-        init(null);
+     * O comparador padrão de ordem natural será utilizado.
+	 */ 
+    @SuppressWarnings("unchecked")
+	public ABB() {
+        init((Comparator<K>) Comparator.naturalOrder());
     }
 
     /**
      * Construtor da classe.
-     * Esse construtor cria uma nova árvore binária de busca vazia utilizando o
-     * comparador fornecido para definir a organização dos elementos na árvore.
-     * Para isso, esse método atribui null à raiz da árvore.
+     * Esse construtor cria uma nova árvore binária de busca vazia.
      *  
      * @param comparador o comparador a ser utilizado para organizar os elementos da árvore.  
      */
@@ -140,7 +133,7 @@ public class ABB<K, V> implements IMapeamento<K, V> {
         	else
         		/// A chave do item armazenado na raiz da árvore 
         		/// é igual à chave do novo item que deveria ser inserido na árvore.
-        		throw new RuntimeException("O item já foi inserido anteriormente na árvore.");
+        		throw new IllegalArgumentException("O item já foi inserido anteriormente na árvore.");
         }
         
         /// Retorna a raiz atualizada da árvore ou sub-árvore em que o item foi adicionado.
