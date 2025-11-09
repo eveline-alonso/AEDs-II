@@ -106,7 +106,7 @@ public class ABB<K, V> implements IMapeamento<K, V> {
      * @param chave a chave associada ao item que deverá ser inserido.
      * @param item o item que deverá ser adicionado à árvore.
      * @return a raiz atualizada da árvore ou sub-árvore em que o item foi adicionado.
-     * @throws RuntimeException se um item com a mesma chave já estiver presente na árvore.
+     * @throws IllegalArgumentException se um item com a mesma chave já estiver presente na árvore.
      */
     protected No<K, V> inserir(No<K, V> raizArvore, K chave, V item) {
     	
