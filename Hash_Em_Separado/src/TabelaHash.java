@@ -22,7 +22,7 @@ public class TabelaHash<K, V> implements IMapeamento<K, V>{
 	public TabelaHash(int capacidade) {
 		
 		if (capacidade < 1) {
-			throw new NoSuchElementException("A capacidade da tabela hash não pode ser menor do que 1.");
+			throw new IllegalArgumentException("A capacidade da tabela hash não pode ser menor do que 1.");
 		}
 		this.capacidade = capacidade;
 		tabelaHash = (Lista<Entrada<K, V>>[]) new Lista[capacidade]; 
